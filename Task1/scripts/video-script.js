@@ -1,4 +1,4 @@
-import { movieData } from './utils/movieData.js';
+import { movieData } from '../utils/movieData.js';
 
 const loadMovieDetails = () => {
   const urlParams = new URLSearchParams(window.location.search);

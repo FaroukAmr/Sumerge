@@ -1,4 +1,4 @@
-import { movieData } from './utils/movieData.js';
+import { movieData } from '../utils/movieData.js';
 
 function populateTable() {
   const tableBody = document.querySelector('.table tbody');
