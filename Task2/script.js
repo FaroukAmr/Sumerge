@@ -1,30 +1,36 @@
-let numberOfElements = 0;
+let numberOfElements = 8 * 7;
 const WIDTH = 8;
 const HEIGHT = 8;
 let COLOR = '';
 let currentTime = 0;
 
 function initGame(width, height) {
-  numberOfElements++;
-  const positions = getRandomXYPositions(numberOfElements, width, height);
-  document.querySelector('.main').innerHTML = '';
-  document.querySelector('.missing').innerHTML = '';
-  COLOR = getRandomRGBValue();
+  if (numberOfElements < width * height) {
+    numberOfElements++;
+    const positions = getRandomXYPositions(numberOfElements, width, height);
+    document.querySelector('.main').innerHTML = '';
+    document.querySelector('.missing').innerHTML = '';
+    COLOR = getRandomRGBValue();
 
-  setupGame('.main', width, HEIGHT, positions);
-  setupGame(
-    '.missing',
-    width,
-    height,
-    positions,
-    getExtraElements(positions, width, height)
-  );
+    setupGame('.main', width, HEIGHT, positions);
+    setupGame(
+      '.missing',
+      width,
+      height,
+      positions,
+      getExtraElements(positions, width, height)
+    );
 
-  const extraElementDiv = document.getElementById('extra-element');
-  if (extraElementDiv) {
-    extraElementDiv.addEventListener('click', () => {
-      initGame(WIDTH, HEIGHT);
-    });
+    const extraElementDiv = document.getElementById('extra-element');
+    if (extraElementDiv) {
+      extraElementDiv.addEventListener('click', () => {
+        initGame(WIDTH, HEIGHT);
+      });
+    }
+    setInterval(() => {
+      currentTime += 0.1;
+      updateTimerDisplay();
+    }, 100);
   }
 }
 
@@ -89,8 +95,4 @@ function updateTimerDisplay() {
 
 document.addEventListener('DOMContentLoaded', () => {
   initGame(WIDTH, HEIGHT);
-  setInterval(() => {
-    currentTime += 0.1;
-    updateTimerDisplay();
-  }, 100);
 });
