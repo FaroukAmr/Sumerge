@@ -2,6 +2,7 @@ let numberOfElements = 0;
 const WIDTH = 8;
 const HEIGHT = 8;
 let COLOR = '';
+let currentTime = 0;
 
 function initGame(width, height) {
   numberOfElements++;
@@ -79,6 +80,17 @@ function getRandomXYPositions(maxPositions, maxX, maxY) {
   return positions;
 }
 
+function updateTimerDisplay() {
+  const timerElement = document.getElementById('timer');
+  if (timerElement) {
+    timerElement.innerHTML = `<h2>Time: ${currentTime.toFixed(2)} seconds</h2>`;
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initGame(WIDTH, HEIGHT);
+  setInterval(() => {
+    currentTime += 0.1;
+    updateTimerDisplay();
+  }, 100);
 });
