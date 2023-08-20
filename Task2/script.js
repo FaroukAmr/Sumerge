@@ -62,7 +62,6 @@ function getRandomRGBValue() {
 
 function getExtraElements(positions, maxX, maxY) {
   let x, y;
-  console.log(positions);
   do {
     x = Math.floor(Math.random() * maxX);
     y = Math.floor(Math.random() * maxY);
