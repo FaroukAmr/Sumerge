@@ -1,14 +1,18 @@
-async function readCSV() {
+interface CSVEntry {
+  [key: string]: string;
+}
+
+async function readCSV(): Promise<CSVEntry[]> {
   try {
     const response = await fetch('./data/data.csv');
     const csvData = await response.text();
     const lines = csvData.split('\n');
     const headers = lines[0].split(',');
 
-    const data = [];
+    const data: CSVEntry[] = [];
     for (let i = 1; i < lines.length; i++) {
       const values = lines[i].split(',');
-      const entry = {};
+      const entry: CSVEntry = {};
       for (let j = 0; j < headers.length; j++) {
         entry[headers[j]] = values[j];
       }
@@ -22,8 +26,8 @@ async function readCSV() {
   }
 }
 
-async function populateTable(csvData) {
-  const table = document.getElementById('csvTable');
+async function populateTable(csvData: CSVEntry[]): Promise<void> {
+  const table = document.getElementById('csvTable') as HTMLTableElement;
 
   const headerRow = table.insertRow();
   for (const header of Object.keys(csvData[0])) {
