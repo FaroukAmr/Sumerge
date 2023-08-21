@@ -1,7 +1,7 @@
 let numberOfElements: number = 0;
 const WIDTH: number = 8;
 const HEIGHT: number = 8;
-let COLOR: string = '';
+let color: string = '';
 let currentTime: number = 0;
 
 interface XYPosition {
@@ -19,7 +19,7 @@ function initGame(width: number, height: number): void {
     );
     (document.querySelector('.main') as HTMLElement).innerHTML = '';
     (document.querySelector('.missing') as HTMLElement).innerHTML = '';
-    COLOR = getRandomRGBValue();
+    color = getRandomRGBValue();
 
     setupGame('.main', width, HEIGHT, positions);
     setupGame(
@@ -65,7 +65,7 @@ function setupGame(
             column.id = 'extra-element';
           }
           column.classList.add('elm');
-          column.style.backgroundColor = COLOR;
+          column.style.backgroundColor = color;
         } else {
           column.classList.add('empty');
         }
