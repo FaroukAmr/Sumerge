@@ -1,98 +1,83 @@
-let numberOfElements = 8 * 7;
-const WIDTH = 8;
-const HEIGHT = 8;
-let COLOR = '';
-let currentTime = 0;
-
+var numberOfElements = 0;
+var WIDTH = 8;
+var HEIGHT = 8;
+var COLOR = '';
+var currentTime = 0;
 function initGame(width, height) {
-  if (numberOfElements < width * height) {
-    numberOfElements++;
-    const positions = getRandomXYPositions(numberOfElements, width, height);
-    document.querySelector('.main').innerHTML = '';
-    document.querySelector('.missing').innerHTML = '';
-    COLOR = getRandomRGBValue();
-
-    setupGame('.main', width, HEIGHT, positions);
-    setupGame(
-      '.missing',
-      width,
-      height,
-      positions,
-      getExtraElements(positions, width, height)
-    );
-
-    const extraElementDiv = document.getElementById('extra-element');
-    if (extraElementDiv) {
-      extraElementDiv.addEventListener('click', () => {
-        initGame(WIDTH, HEIGHT);
-      });
-    }
-    setInterval(() => {
-      currentTime += 0.1;
-      updateTimerDisplay();
-    }, 100);
-  }
-}
-
-function setupGame(containerClass, width, height, positions, extraElement) {
-  const containers = document.querySelectorAll(containerClass);
-  containers.forEach((container) => {
-    for (let i = 0; i < width; i++) {
-      const row = document.createElement('div');
-      row.classList.add('row');
-      for (let j = 0; j < height; j++) {
-        const column = document.createElement('div');
-        const isExtraElement =
-          extraElement && extraElement.x == i && extraElement.y == j;
-        if (positions.has(`${i},${j}`) || isExtraElement) {
-          if (isExtraElement) {
-            column.id = 'extra-element';
-          }
-          column.classList.add('elm');
-          column.style.backgroundColor = COLOR;
-        } else {
-          column.classList.add('empty');
+    if (numberOfElements < width * height) {
+        numberOfElements++;
+        var positions = getRandomXYPositions(numberOfElements, width, height);
+        document.querySelector('.main').innerHTML = '';
+        document.querySelector('.missing').innerHTML = '';
+        COLOR = getRandomRGBValue();
+        setupGame('.main', width, HEIGHT, positions);
+        setupGame('.missing', width, height, positions, getExtraElements(positions, width, height));
+        var extraElementDiv = document.getElementById('extra-element');
+        if (extraElementDiv) {
+            extraElementDiv.addEventListener('click', function () {
+                initGame(WIDTH, HEIGHT);
+            });
         }
-        row.append(column);
-      }
-      container.append(row);
+        setInterval(function () {
+            currentTime += 0.1;
+            updateTimerDisplay();
+        }, 100);
     }
-  });
 }
-
+function setupGame(containerClass, width, height, positions, extraElement) {
+    var containers = document.querySelectorAll(containerClass);
+    containers.forEach(function (container) {
+        for (var i = 0; i < width; i++) {
+            var row = document.createElement('div');
+            row.classList.add('row');
+            for (var j = 0; j < height; j++) {
+                var column = document.createElement('div');
+                var isExtraElement = extraElement && extraElement.x === i && extraElement.y === j;
+                if (positions.has("".concat(i, ",").concat(j)) || isExtraElement) {
+                    if (isExtraElement) {
+                        column.id = 'extra-element';
+                    }
+                    column.classList.add('elm');
+                    column.style.backgroundColor = COLOR;
+                }
+                else {
+                    column.classList.add('empty');
+                }
+                row.append(column);
+            }
+            container.append(row);
+        }
+    });
+}
 function getRandomRGBValue() {
-  var o = Math.round,
-    r = Math.random,
-    s = 255;
-  return 'rgba(' + o(r() * s) + ',' + o(r() * s) + ',' + o(r() * s);
+    var o = Math.round;
+    var r = Math.random;
+    var s = 255;
+    return "rgba(".concat(o(r() * s), ",").concat(o(r() * s), ",").concat(o(r() * s), ")");
 }
-
 function getExtraElements(positions, maxX, maxY) {
-  let x, y;
-  do {
-    x = Math.floor(Math.random() * maxX);
-    y = Math.floor(Math.random() * maxY);
-  } while (positions.has(`${x},${y}`));
-  return { x, y };
+    var x, y;
+    do {
+        x = Math.floor(Math.random() * maxX);
+        y = Math.floor(Math.random() * maxY);
+    } while (positions.has("".concat(x, ",").concat(y)));
+    return { x: x, y: y };
 }
-
 function getRandomXYPositions(maxPositions, maxX, maxY) {
-  const positions = new Set();
-  while (positions.size < maxPositions) {
-    const x = Math.floor(Math.random() * maxX);
-    const y = Math.floor(Math.random() * maxY);
-    positions.add(`${x},${y}`);
-  }
-  return positions;
+    var positions = new Set();
+    while (positions.size < maxPositions) {
+        var x = Math.floor(Math.random() * maxX);
+        var y = Math.floor(Math.random() * maxY);
+        positions.add("".concat(x, ",").concat(y));
+    }
+    return positions;
 }
-
 function updateTimerDisplay() {
-  const timerElement = document.getElementById('timer');
-  if (timerElement) {
-    timerElement.innerHTML = `<h2>Time: ${currentTime.toFixed(2)} seconds</h2>`;
-  }
+    var timerElement = document.getElementById('timer');
+    if (timerElement) {
+        timerElement.innerHTML = "<h2>Time: ".concat(currentTime.toFixed(2), " seconds</h2>");
+    }
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-  initGame(WIDTH, HEIGHT);
+document.addEventListener('DOMContentLoaded', function () {
+    initGame(WIDTH, HEIGHT);
 });

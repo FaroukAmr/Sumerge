@@ -1,15 +1,24 @@
-let numberOfElements = 8 * 7;
-const WIDTH = 8;
-const HEIGHT = 8;
-let COLOR = '';
-let currentTime = 0;
+let numberOfElements: number = 0;
+const WIDTH: number = 8;
+const HEIGHT: number = 8;
+let COLOR: string = '';
+let currentTime: number = 0;
 
-function initGame(width, height) {
+interface XYPosition {
+  x: number;
+  y: number;
+}
+
+function initGame(width: number, height: number): void {
   if (numberOfElements < width * height) {
     numberOfElements++;
-    const positions = getRandomXYPositions(numberOfElements, width, height);
-    document.querySelector('.main').innerHTML = '';
-    document.querySelector('.missing').innerHTML = '';
+    const positions: Set<string> = getRandomXYPositions(
+      numberOfElements,
+      width,
+      height
+    );
+    (document.querySelector('.main') as HTMLElement).innerHTML = '';
+    (document.querySelector('.missing') as HTMLElement).innerHTML = '';
     COLOR = getRandomRGBValue();
 
     setupGame('.main', width, HEIGHT, positions);
@@ -34,16 +43,23 @@ function initGame(width, height) {
   }
 }
 
-function setupGame(containerClass, width, height, positions, extraElement) {
-  const containers = document.querySelectorAll(containerClass);
+function setupGame(
+  containerClass: string,
+  width: number,
+  height: number,
+  positions: Set<string>,
+  extraElement?: XYPosition
+): void {
+  const containers: NodeListOf<HTMLElement> =
+    document.querySelectorAll(containerClass);
   containers.forEach((container) => {
     for (let i = 0; i < width; i++) {
-      const row = document.createElement('div');
+      const row: HTMLDivElement = document.createElement('div');
       row.classList.add('row');
       for (let j = 0; j < height; j++) {
-        const column = document.createElement('div');
-        const isExtraElement =
-          extraElement && extraElement.x == i && extraElement.y == j;
+        const column: HTMLDivElement = document.createElement('div');
+        const isExtraElement: boolean | undefined =
+          extraElement && extraElement.x === i && extraElement.y === j;
         if (positions.has(`${i},${j}`) || isExtraElement) {
           if (isExtraElement) {
             column.id = 'extra-element';
@@ -60,15 +76,19 @@ function setupGame(containerClass, width, height, positions, extraElement) {
   });
 }
 
-function getRandomRGBValue() {
-  var o = Math.round,
-    r = Math.random,
-    s = 255;
-  return 'rgba(' + o(r() * s) + ',' + o(r() * s) + ',' + o(r() * s);
+function getRandomRGBValue(): string {
+  const o = Math.round;
+  const r = Math.random;
+  const s = 255;
+  return `rgba(${o(r() * s)},${o(r() * s)},${o(r() * s)})`;
 }
 
-function getExtraElements(positions, maxX, maxY) {
-  let x, y;
+function getExtraElements(
+  positions: Set<string>,
+  maxX: number,
+  maxY: number
+): XYPosition {
+  let x: number, y: number;
   do {
     x = Math.floor(Math.random() * maxX);
     y = Math.floor(Math.random() * maxY);
@@ -76,18 +96,22 @@ function getExtraElements(positions, maxX, maxY) {
   return { x, y };
 }
 
-function getRandomXYPositions(maxPositions, maxX, maxY) {
-  const positions = new Set();
+function getRandomXYPositions(
+  maxPositions: number,
+  maxX: number,
+  maxY: number
+): Set<string> {
+  const positions: Set<string> = new Set();
   while (positions.size < maxPositions) {
-    const x = Math.floor(Math.random() * maxX);
-    const y = Math.floor(Math.random() * maxY);
+    const x: number = Math.floor(Math.random() * maxX);
+    const y: number = Math.floor(Math.random() * maxY);
     positions.add(`${x},${y}`);
   }
   return positions;
 }
 
-function updateTimerDisplay() {
-  const timerElement = document.getElementById('timer');
+function updateTimerDisplay(): void {
+  const timerElement: HTMLElement | null = document.getElementById('timer');
   if (timerElement) {
     timerElement.innerHTML = `<h2>Time: ${currentTime.toFixed(2)} seconds</h2>`;
   }
