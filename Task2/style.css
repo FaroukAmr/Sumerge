@@ -26,3 +26,12 @@
   height: 50px;
   border: 1px solid black;
 }
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  padding-top: 30px;
+}
