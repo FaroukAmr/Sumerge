@@ -1,0 +1,10 @@
+id,firstname,lastname,age,education
+1,John,Doe,23,BSc
+2,Jane,Doe,25,MSc
+3,John,Smith,27,PhD
+4,Jane,Smith,29,BSc
+5,John,Doe,31,MSc
+6,Jane,Doe,33,PhD
+7,John,Smith,35,BSc
+8,Jane,Smith,37,MSc
+9,John,Doe,39,PhD
