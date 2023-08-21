@@ -33,22 +33,20 @@ function readCSV() {
     });
 }
 function populateTable(csvData) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const table = document.getElementById('csvTable');
-        const headerRow = table.insertRow();
+    const table = document.getElementById('csvTable');
+    const headerRow = table.insertRow();
+    for (const header of Object.keys(csvData[0])) {
+        const th = document.createElement('th');
+        th.textContent = header;
+        headerRow.appendChild(th);
+    }
+    for (const entry of csvData) {
+        const row = table.insertRow();
         for (const header of Object.keys(csvData[0])) {
-            const th = document.createElement('th');
-            th.textContent = header;
-            headerRow.appendChild(th);
+            const cell = row.insertCell();
+            cell.textContent = entry[header];
         }
-        for (const entry of csvData) {
-            const row = table.insertRow();
-            for (const header of Object.keys(csvData[0])) {
-                const cell = row.insertCell();
-                cell.textContent = entry[header];
-            }
-        }
-    });
+    }
 }
 document.addEventListener('DOMContentLoaded', () => {
     readCSV()

@@ -25,8 +25,7 @@ async function readCSV(): Promise<CSVEntry[]> {
     throw error;
   }
 }
-
-async function populateTable(csvData: CSVEntry[]): Promise<void> {
+function populateTable(csvData: CSVEntry[]): void {
   const table = document.getElementById('csvTable') as HTMLTableElement;
 
   const headerRow = table.insertRow();
